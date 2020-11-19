@@ -1,8 +1,9 @@
-import React from "react";
-import styled from "styled-components";
-
-import Label from "../common/Label";
-import { MONTHS } from "../constants";
+import React from 'react';
+import { ViewPagerAndroidBase } from 'react-native';
+import styled from 'styled-components';
+import { View } from 'react-native';
+import Label from '../common/Label';
+import { MONTHS } from '../constants';
 
 const Wrapper = styled.View<{ isFirst: boolean }>`
   padding: 30px 20px;
@@ -40,7 +41,7 @@ const Desc = styled.Text`
   color: white;
   font-size: 15px;
   color: ${({ theme }) => theme.text};
-  ${({ bold }) => bold && "font-weight: bold;"}
+  ${({ bold }) => bold && 'font-weight: bold;'}
 `;
 
 export default ({ data, isFirst = false }) => {
@@ -48,7 +49,7 @@ export default ({ data, isFirst = false }) => {
   return (
     <Wrapper isFirst={isFirst}>
       <Row>
-        <DateWrapper>
+        <View>
           {launchTime.getTime() / 1000 === 0 ? (
             <Day>TBD</Day>
           ) : (
@@ -57,7 +58,7 @@ export default ({ data, isFirst = false }) => {
               <Day>{MONTHS[launchTime.getMonth()]}</Day>
             </>
           )}
-        </DateWrapper>
+        </View>
         <ContentWrapper>
           <Desc bold>{data.name}</Desc>
           <Desc numberOfLines={1}>{data.pad.name}</Desc>

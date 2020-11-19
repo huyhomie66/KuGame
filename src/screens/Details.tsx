@@ -1,15 +1,15 @@
-import { useTheme } from "@react-navigation/native";
-import React, { useEffect, useState, useContext } from "react";
-import { ScrollView, Linking, View, Animated } from "react-native";
-import openMap from "react-native-open-maps";
-import styled from "styled-components/native";
+import { useTheme } from '@react-navigation/native';
+import React, { useEffect, useState, useContext } from 'react';
+import { ScrollView, Linking, View, Animated } from 'react-native';
+import openMap from 'react-native-open-maps';
+import styled from 'styled-components/native';
 
-import ActionMenu from "../common/ActionMenu";
-import Countdown from "../common/Countdown";
-import Icon from "../common/Icon";
-import Label from "../common/Label";
-import { openLink } from "../helpers/OpenLink";
-import AppState from "../stores/AppState";
+import ActionMenu from '../common/ActionMenu';
+import Countdown from '../common/Countdown';
+import Icon from '../common/Icon';
+import Label from '../common/Label';
+import { openLink } from '../helpers/OpenLink';
+import AppState from '../stores/AppState';
 
 const IMAGE_HEIGHT = 400;
 
@@ -72,43 +72,37 @@ interface Props {
 }
 
 const Details: React.FC<Props> = ({ route, navigation }) => {
-  useEffect(() => {
-  }, []);
+  useEffect(() => {}, []);
 
   const [scrollY] = useState(new Animated.Value(0));
   const { colors } = useTheme();
   const appStateStore = useContext(AppState);
 
   const { data } = route.params;
-  const videoLink =
-    data.vidURLs && data.vidURLs.length > 0 && data.vidURLs[0].url;
+  const videoLink = data.vidURLs && data.vidURLs.length > 0 && data.vidURLs[0].url;
   const wikiLink = data.launch_service_provider.wiki_url;
-  const lspAbbrev = data.launch_service_provider.abbrev
-    ? data.launch_service_provider.abbrev
-    : "";
-  const missionType = data.mission ? data.mission.type : "Unknown";
-  const missionDescription = data.mission
-    ? data.mission.description
-    : "No Description Available";
+  const lspAbbrev = data.launch_service_provider.abbrev ? data.launch_service_provider.abbrev : '';
+  const missionType = data.mission ? data.mission.type : 'Unknown';
+  const missionDescription = data.mission ? data.mission.description : 'No Description Available';
 
   const actionItems = [
     [
       {
-        title: "Livestream",
-        icon: "ChevronRight",
-        preview: !videoLink && "Unavailable",
-        thumbIcon: !videoLink ? "VideoOff" : "Video",
-        thumbColor: "#fa8435",
+        title: 'Livestream',
+        icon: 'ChevronRight',
+        preview: !videoLink && 'Unavailable',
+        thumbIcon: !videoLink ? 'VideoOff' : 'Video',
+        thumbColor: '#fa8435',
         disabled: !videoLink,
         action: () => {
           Linking.openURL(videoLink);
         },
       },
       {
-        title: "Location",
-        icon: "ChevronRight",
-        thumbIcon: "Pin",
-        thumbColor: "#2dcd55",
+        title: 'Location',
+        icon: 'ChevronRight',
+        thumbIcon: 'Pin',
+        thumbColor: '#2dcd55',
         action: () => {
           const { latitude, longitude } = data.pad;
           const lat = parseFloat(latitude);
@@ -118,10 +112,10 @@ const Details: React.FC<Props> = ({ route, navigation }) => {
       },
       {
         title: `${lspAbbrev} Wikipedia`,
-        icon: "ChevronRight",
-        preview: !wikiLink && "Unavailable",
-        thumbIcon: "Globe",
-        thumbColor: "#1889ff",
+        icon: 'ChevronRight',
+        preview: !wikiLink && 'Unavailable',
+        thumbIcon: 'Globe',
+        thumbColor: '#1889ff',
         disabled: !wikiLink,
         action: () => {
           openLink(wikiLink, appStateStore.browser);
@@ -133,24 +127,20 @@ const Details: React.FC<Props> = ({ route, navigation }) => {
   const ImageScale = scrollY.interpolate({
     inputRange: [-100, 0, 200],
     outputRange: [1.4, 1.2, 1],
-    extrapolate: "clamp",
+    extrapolate: 'clamp',
   });
 
   return (
-    <View style={{ overflow: "hidden" }}>
+    <View style={{ overflow: 'hidden' }}>
       <Image
         source={{ uri: data.image || data.rocket.configuration.image_url }}
         style={{ transform: [{ scale: ImageScale }] }}
       />
       <Animated.ScrollView
         contentContainerStyle={{ paddingTop: IMAGE_HEIGHT }}
-        onScroll={Animated.event(
-          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-          {
-            useNativeDriver: true,
-          }
-        )}
-      >
+        onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
+          useNativeDriver: true,
+        })}>
         <View style={{ backgroundColor: colors.background }}>
           <ContentWrapper>
             <Title>{data.name}</Title>
@@ -166,29 +156,23 @@ const Details: React.FC<Props> = ({ route, navigation }) => {
               {data.launch_service_provider.name && (
                 <Row>
                   <Icon name="Briefcase" color={colors.primary} size={20} />
-                  <PinLabel numberOfLines={2}>
-                    {data.launch_service_provider.name}
-                  </PinLabel>
+                  <PinLabel numberOfLines={2}>{data.launch_service_provider.name}</PinLabel>
                 </Row>
               )}
               {data.net && (
                 <Row>
                   <Icon name="Clock" color={colors.primary} size={20} />
-                  <PinLabel numberOfLines={2}>
-                    {new Date(data.net).toLocaleString()}
-                  </PinLabel>
+                  <PinLabel numberOfLines={2}>{new Date(data.net).toLocaleString()}</PinLabel>
                 </Row>
               )}
               {data.pad.name && (
                 <Row>
                   <Icon name="Pin" color={colors.primary} size={20} />
-                  <PinLabel numberOfLines={2}>
-                    {data.pad.location.name}
-                  </PinLabel>
+                  <PinLabel numberOfLines={2}>{data.pad.location.name}</PinLabel>
                 </Row>
               )}
             </DescWrapper>
-            <ActionMenu items={actionItems} />
+            {/* <ActionMenu items={actionItems} /> */}
           </ContentWrapper>
         </View>
       </Animated.ScrollView>

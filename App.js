@@ -24,10 +24,10 @@ import Licenses from './src/screens/Licenses';
 import AppState from './src/stores/AppState';
 import { Themes } from './src/types';
 import AppIconSettings from './src/screens/AppIconSettings';
-import useCodePush from './src/hooks/useCodePush';
-import CodePush from 'react-native-code-push';
+// import useCodePush from './src/hooks/useCodePush';
 import Plash from './src/components/Plash';
-
+import KuApp from './src/KuApp/Home';
+console.disableYellowBox = true;
 enableScreens();
 
 const Tab = createBottomTabNavigator();
@@ -35,7 +35,7 @@ const HomeNav = createNativeStackNavigator();
 const CalendarNav = createNativeStackNavigator();
 const NewsNav = createNativeStackNavigator();
 const SearchNav = createNativeStackNavigator();
-
+const Header_Color = '#FFD700';
 const HomeStack = () => {
   return (
     <HomeNav.Navigator>
@@ -43,24 +43,32 @@ const HomeStack = () => {
         options={{
           headerTranslucent: false,
           headerHideShadow: true,
-          headerTitle: '',
-          headerStyle: { backgroundColor: 'transparent' },
+          headerTitle: 'KuBet',
+          headerStyle: { backgroundColor: Header_Color },
           headerRight: HeaderSettingsButton,
         }}
         name="Home"
-        component={Dashboard}
+        component={KuApp}
       />
-      <HomeNav.Screen name="Details" component={Details} />
-      <HomeNav.Screen name="Settings" component={Settings} options={{ headerBackTitle: 'Home' }} />
+      <HomeNav.Screen
+        name="Details"
+        component={Details}
+        options={{ headerBackTitle: 'Details', headerStyle: { backgroundColor: Header_Color } }}
+      />
+      <HomeNav.Screen
+        name="Settings"
+        component={Settings}
+        options={{ headerBackTitle: 'Home', headerStyle: { backgroundColor: Header_Color } }}
+      />
       <HomeNav.Screen name="Notifications" component={NotificationsSettings} />
       <HomeNav.Screen name="Appearance" component={AppearanceSettings} />
       <HomeNav.Screen name="Icon" component={AppIconSettings} />
       <HomeNav.Screen
         name="Licenses"
-        options={{
-          headerLargeTitle: true,
-          headerHideShadow: true,
-        }}
+        // options={{
+        //   headerLargeTitle: true,
+        //   headerHideShadow: true,
+        // }}
         component={Licenses}
       />
     </HomeNav.Navigator>
@@ -73,9 +81,9 @@ const CalendarStack = () => {
     <CalendarNav.Navigator>
       <CalendarNav.Screen
         options={{
-          headerLargeTitle: true,
-          headerHideShadow: true,
-          headerStyle: { backgroundColor: colors.background },
+          // headerLargeTitle: true,
+          // headerHideShadow: true,
+          headerStyle: { backgroundColor: Header_Color },
         }}
         name="Calendar"
         component={Calendar}
@@ -90,9 +98,10 @@ const NewsStack = () => {
     <NewsNav.Navigator>
       <NewsNav.Screen
         options={{
-          headerLargeTitle: true,
-          headerHideShadow: true,
-          headerStyle: { backgroundColor: colors.background },
+          // headerLargeTitle: true,
+          // headerHideShadow: true,
+          headerStyle: { backgroundColor: Header_Color },
+          headerShown: false,
         }}
         name="News"
         component={News}
@@ -107,14 +116,23 @@ const SearchStack = () => {
     <SearchNav.Navigator>
       <SearchNav.Screen
         options={{
-          headerLargeTitle: true,
-          headerHideShadow: true,
-          headerStyle: { backgroundColor: colors.background },
+          // headerLargeTitle: true,
+          // headerHideShadow: true,
+          headerStyle: { backgroundColor: Header_Color },
+          headerShown: false,
         }}
         name="Search"
         component={Search}
       />
-      <SearchNav.Screen name="Details" component={Details} />
+      <SearchNav.Screen
+        name="Details"
+        component={Details}
+        options={{
+          headerBackTitle: 'Details',
+          headerShown: false,
+          headerStyle: { backgroundColor: Header_Color },
+        }}
+      />
     </SearchNav.Navigator>
   );
 };
@@ -147,10 +165,10 @@ const App = observer(() => {
         <NavigationContainer theme={theme}>
           <StatusBar barStyle={statusBarStyle} />
           <Tab.Navigator tabBar={Tabbar}>
-            <Tab.Screen name="Home" component={HomeStack} />
-            <Tab.Screen name="Calendar" component={CalendarStack} />
             <Tab.Screen name="News" component={NewsStack} />
             <Tab.Screen name="Search" component={SearchStack} />
+            <Tab.Screen name="Home" component={HomeStack} />
+            <Tab.Screen name="Calendar" component={Settings} />
           </Tab.Navigator>
         </NavigationContainer>
       </ThemeProvider>
@@ -159,12 +177,12 @@ const App = observer(() => {
 });
 
 const AppContainer = () => {
-  const { hasUpdate, progress, synced } = useCodePush();
-  console.log(progress);
+  // const { hasUpdate, progress, synced } = useCodePush();
   return (
     <Suspense>
-      {!!synced && <App />}
-      {!synced && <Plash hasUpdate={hasUpdate} progress={progress} />}
+      {/* {!!synced && <App />}
+      {!synced && <Plash hasUpdate={hasUpdate} progress={progress} />} */}
+      <App />
     </Suspense>
   );
 };

@@ -1,17 +1,17 @@
-import { useNavigation, useTheme } from "@react-navigation/native";
-import { observer } from "mobx-react";
-import React, { useContext, useEffect, useState } from "react";
-import { ScrollView, View, Linking } from "react-native";
-import * as StoreReview from "react-native-store-review";
-import styled from "styled-components/native";
+import { useNavigation, useTheme } from '@react-navigation/native';
+import { observer } from 'mobx-react';
+import React, { useContext, useEffect, useState } from 'react';
+import { ScrollView, View, Linking, SafeAreaView } from 'react-native';
+import * as StoreReview from 'react-native-store-review';
+import styled from 'styled-components/native';
 
-import Package from "../../package.json";
-import ActionMenu from "../common/ActionMenu";
-import SelectionModal from "../common/SelectionModal";
-import { openLink } from "../helpers/OpenLink";
-import AppState from "../stores/AppState";
-import Launches from "../stores/Launches";
-import { Themes, Browsers } from "../types";
+import Package from '../../package.json';
+import ActionMenu from '../common/ActionMenu';
+import SelectionModal from '../common/SelectionModal';
+import { openLink } from '../helpers/OpenLink';
+import AppState from '../stores/AppState';
+import Launches from '../stores/Launches';
+import { Themes, Browsers } from '../types';
 
 const BottomText = styled.Text`
   text-align: center;
@@ -20,8 +20,7 @@ const BottomText = styled.Text`
 `;
 
 const Settings = observer(() => {
-  useEffect(() => {
-  }, []);
+  useEffect(() => {}, []);
 
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
@@ -30,50 +29,45 @@ const Settings = observer(() => {
   const items = [
     [
       {
-        title: "Appearance",
-        icon: "ChevronRight",
+        title: 'Appearance',
+        icon: 'ChevronRight',
         preview:
           appStateStore.theme === Themes.automatic
-            ? "Automatic"
+            ? 'Automatic'
             : appStateStore.theme === Themes.light
-              ? "Light"
-              : "Dark",
-        action: () => navigation.navigate("Appearance"),
+            ? 'Light'
+            : 'Dark',
+        action: () => navigation.navigate('Appearance'),
       },
       {
-        title: "App Icon",
-        icon: "ChevronRight",
-        action: () => navigation.navigate("Icon"),
+        title: 'App Icon',
+        icon: 'ChevronRight',
+        action: () => navigation.navigate('Icon'),
         preview: appStateStore.appIcon,
       },
       {
-        title: "Open Links in",
-        icon: "ChevronRight",
+        title: 'Open Links in',
+        icon: 'ChevronRight',
         action: () => setModalVisible(true),
-        preview:
-          appStateStore.browser === Browsers.safari
-            ? "Safari"
-            : "In-App Safari",
+        preview: appStateStore.browser === Browsers.safari ? 'Safari' : 'In-App Safari',
       },
     ],
-    [
-    ],
-    [
-    ],
+    [],
+    [],
   ];
 
   const modalActions = [
     {
-      icon: "Compass",
-      title: "In-App Browser",
+      icon: 'Compass',
+      title: 'In-App Browser',
       action: () => {
         appStateStore.setBrowser(Browsers.inApp);
       },
       id: Browsers.inApp,
     },
     {
-      icon: "Compass",
-      title: "Safari",
+      icon: 'Compass',
+      title: 'Safari',
       action: () => {
         appStateStore.setBrowser(Browsers.safari);
       },
@@ -82,7 +76,7 @@ const Settings = observer(() => {
   ];
 
   return (
-    <View style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }}>
       {modalVisible && (
         <SelectionModal
           closeModal={() => {
@@ -97,7 +91,7 @@ const Settings = observer(() => {
         <ActionMenu items={items} />
         <BottomText>2020 - HuyHomie</BottomText>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 });
 

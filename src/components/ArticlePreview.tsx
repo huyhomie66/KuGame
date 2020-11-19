@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
-import styled from "styled-components/native";
+import React, { useContext } from 'react';
+import styled from 'styled-components/native';
 
-import { openLink } from "../helpers/OpenLink";
-import AppState from "../stores/AppState";
+import { openLink } from '../helpers/OpenLink';
+import AppState from '../stores/AppState';
 
 const Wrapper = styled.TouchableOpacity<{ isFirst: boolean }>`
   width: 100%;
@@ -27,7 +27,7 @@ const Title = styled.Text`
   text-align: left;
   padding-bottom: 5px;
   font-weight: 700;
-  color: ${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.secondaryText};
 `;
 
 const Subtitle = styled.Text`
@@ -52,11 +52,7 @@ interface Props {
   isFirst?: boolean;
 }
 
-const ArticlePreview: React.FC<Props> = ({
-  article,
-  timePosted,
-  isFirst = false,
-}) => {
+const ArticlePreview: React.FC<Props> = ({ article, timePosted, isFirst = false }) => {
   const appStateStore = useContext(AppState);
 
   const onArticlePress = () => {
@@ -65,13 +61,14 @@ const ArticlePreview: React.FC<Props> = ({
 
   return (
     <Wrapper onPress={onArticlePress} isFirst={isFirst}>
-      <Thumbnail source={{ uri: article.featured_image }} />
       <DetailsWrapper>
+        <Title>{timePosted}</Title>
         <Title>{article.title}</Title>
         <Subtitle>
-          {article.news_site_long} <Dot /> {timePosted}
+          {article.news_site_long} <Dot />
         </Subtitle>
       </DetailsWrapper>
+      <Thumbnail source={{ uri: article.featured_image }} />
     </Wrapper>
   );
 };

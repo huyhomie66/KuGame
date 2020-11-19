@@ -1,20 +1,20 @@
-import { useTheme } from "@react-navigation/native";
-import { observer } from "mobx-react";
-import React, { useEffect, useContext, useState } from "react";
-import { TouchableOpacity } from "react-native";
-import styled from "styled-components";
+import { useTheme } from '@react-navigation/native';
+import { observer } from 'mobx-react';
+import React, { useEffect, useContext, useState } from 'react';
+import { TouchableOpacity } from 'react-native';
+import styled from 'styled-components';
 
-import BigTitle from "../common/BigTitle";
-import Loader from "../common/Loader";
-import ResultCard from "../components/ResultCard";
-import Searchbar from "../components/SearchBar";
-import { STATES } from "../constants";
-import { openLink } from "../helpers/OpenLink";
-import AppState from "../stores/AppState";
-import Icon from "../common/Icon";
-import ArticlePreview from "../components/ArticlePreview";
-import Search from "../stores/Search";
-import ErrorCard from "../common/ErrorCard";
+import BigTitle from '../common/BigTitle';
+import Loader from '../common/Loader';
+import ResultCard from '../components/ResultCard';
+import Searchbar from '../components/SearchBar';
+import { STATES } from '../constants';
+import { openLink } from '../helpers/OpenLink';
+import AppState from '../stores/AppState';
+import Icon from '../common/Icon';
+import ArticlePreview from '../components/ArticlePreview';
+import Search from '../stores/Search';
+import ErrorCard from '../common/ErrorCard';
 
 const ContentWrapper = styled.SafeAreaView`
   flex: 1;
@@ -71,14 +71,14 @@ const SearchScreen = observer(({ navigation }) => {
   const searchStore = useContext(Search);
   const appStateStore = useContext(AppState);
   const { colors } = useTheme();
-  const [searchStr, setSearchStr] = useState("");
+  const [searchStr, setSearchStr] = useState('');
 
   useEffect(() => {
     searchStore.initStore();
   }, []);
 
   const showDetails = (data) => {
-    navigation.navigate("Details", { data });
+    navigation.navigate('Details', { data });
   };
   const {
     launchResults,
@@ -103,34 +103,22 @@ const SearchScreen = observer(({ navigation }) => {
           if (str.length === 0) clearResults();
         }}
       />
-      <ScrollWrapper contentContainerStyle={{ alignItems: "center" }}>
+      <ScrollWrapper contentContainerStyle={{ alignItems: 'center' }}>
         {state === STATES.LOADING && <Loader />}
-        {(launchResults.length >= 0 || newsResults.length >= 0) &&
-          state === STATES.SUCCESS && (
-            <>
-              <ResultCount>{totalResults || 0} results</ResultCount>
-              {launchResults.map((data, i) => (
-                <ResultCard
-                  data={data}
-                  showDetails={showDetails}
-                />
-              ))}
-              <ResultCount>Related news articles</ResultCount>
-              {newsResults.map((data, index) => (
-                <ArticlePreview
-                  key={index}
-                  article={data}
-                  timePosted=""
-                  isFirst={index === 0}
-                />
-              ))}
-            </>
-          )}
+        {(launchResults.length >= 0 || newsResults.length >= 0) && state === STATES.SUCCESS && (
+          <>
+            <ResultCount>{totalResults || 0} results</ResultCount>
+            {launchResults.map((data, i) => (
+              <ResultCard data={data} showDetails={showDetails} />
+            ))}
+            <ResultCount>Related news articles</ResultCount>
+            {newsResults.map((data, index) => (
+              <ArticlePreview key={index} article={data} timePosted="" isFirst={index === 0} />
+            ))}
+          </>
+        )}
         {state === STATES.ERROR && (
-          <ErrorCard
-            message="An error occured, please try again later"
-            onRetry={clearResults}
-          />
+          <ErrorCard message="An error occured, please try again later" onRetry={clearResults} />
         )}
         {state === STATES.IDLE && searchStore.history.length > 0 && (
           <>
@@ -148,8 +136,7 @@ const SearchScreen = observer(({ navigation }) => {
                 onPress={() => {
                   setSearchStr(item);
                   searchLaunches(item);
-                }}
-              >
+                }}>
                 <HistoryText>{item}</HistoryText>
                 <Icon name="ArrowUpLeft" color={colors.primary} />
               </HistoryCard>
@@ -159,17 +146,12 @@ const SearchScreen = observer(({ navigation }) => {
         {state === STATES.IDLE && searchStore.history.length === 0 && (
           <>
             <HintTitle>Find a launch</HintTitle>
-            <HintText>
-              Search accross every space launches or news articles
-            </HintText>
+            <HintText>Search accross every space launches or news articles</HintText>
           </>
         )}
         <TouchableOpacity
-          onPress={() =>
-            openLink("https://thespacedevs.com/", appStateStore.browser)
-          }
-        >
-          <Footer>Data provided by the Launch Library 2.0</Footer>
+          onPress={() => openLink('https://thespacedevs.com/', appStateStore.browser)}>
+          <Footer>HANOI DCMM</Footer>
         </TouchableOpacity>
       </ScrollWrapper>
     </ContentWrapper>
