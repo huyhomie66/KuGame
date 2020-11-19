@@ -27,7 +27,7 @@ import AppIconSettings from './src/screens/AppIconSettings';
 import useCodePush from './src/hooks/useCodePush';
 import CodePush from 'react-native-code-push';
 import Plash from './src/components/Plash';
-import KuApp from './src/KuApp/Home';
+
 enableScreens();
 
 const Tab = createBottomTabNavigator();
